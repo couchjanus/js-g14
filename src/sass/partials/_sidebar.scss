@@ -1,0 +1,172 @@
+// SIDEBAR STYLE
+
+.dismiss {
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    background: $sidebar-bg;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+
+    &:hover {
+        background: #fff;
+        color: $sidebar-bg;
+    }
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 998;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+}
+.overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+.sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    z-index: 999;
+    background: $sidebar-bg;
+    color: #fff;
+    transition: all 0.3s;
+    overflow-y: scroll;
+    box-shadow: $shadow-sb;
+
+    & .sidebar-header {
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        background: $sidebar-header-bg;
+    }
+
+    & .footer {
+        padding: 10px;
+        width: 100%;
+    }
+
+    & ul.components {
+        padding: 10px;
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        & li {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid black;
+
+            & .view  {
+                display: flex;
+                justify-content: flex-start;
+
+                & .img {
+                    width: 70px;
+                    height: 80px;
+                    min-width: 70px;
+                    min-height: 80px;
+                    margin-right: 10px;
+                    background-size: contain;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-image: url(/assets/images/01.jpg);
+                }
+                & .title {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                }
+                & .adding {
+                    padding: 2px 4px;
+                    border: 1px solid #03A9F4;
+                    color: white;
+                    background-color: $sidebar-bg;
+                    
+                    &:nth-child(2) {
+                        color: black;
+                        background-color: white;
+                        border-right: none;
+                        border-left: none;
+                    }
+                    &:first-child {
+                        cursor: pointer;
+                    }
+                    &:nth-child(3) {
+                        cursor: pointer;
+                        border-left: none;
+                        margin-right: 20px;
+                    }
+                }
+                & .amount {
+                    margin-top: -15px;
+                }
+            }
+
+            & .interactions p:first-child {
+                 margin-bottom: 10px;
+            }
+            & .interactions {
+                text-align: right;
+            }
+            & .interactions p:first-child {
+                cursor: pointer;
+            }
+
+        }
+    }
+
+}
+
+.sidebar.active {
+    right: 0;
+}
+
+ul.checkout {
+    & li {
+            padding: 10px;
+            font-size: 1.1em;
+            & a {
+                text-align: center;
+                display: block;
+                border-radius: 5px;
+                margin-bottom: 5px;
+            }
+        }
+}
+
+.check-out {
+    background: #fff;
+    color: $sidebar-bg;
+}
+
+.check-out:hover {
+    background: $sidebar-header-bg;
+}
+
+a.article {
+    background: $sidebar-header-bg !important;
+    color: #fff !important;
+}
+a.article:hover {
+    background: #fff !important;
+    color: $sidebar-header-bg !important;
+}

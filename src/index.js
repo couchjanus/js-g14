@@ -4,4 +4,5 @@ import $ from "jquery";
 
 import './js/test';
 // import './js/app';
+// import './js/jqapp';
 // import './js/calc';

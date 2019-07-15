@@ -17968,100 +17968,134 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   });
 });
 },{"jquery":"../node_modules/jquery/dist/jquery.js","popper.js":"../node_modules/popper.js/dist/esm/popper.js"}],"js/test.js":[function(require,module,exports) {
-// Доступ к свойствам осуществляется по имени свойства (по ключу).
-console.log(document.body); // BODY
+'use strict';
 
-console.log(document.title); // title
-// ================nodeType==========================
+var _jquery = _interopRequireDefault(require("jquery"));
 
-console.log("тип узла: " + document.nodeType); // тип узла: 9
-// ================nodeName==========================
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-console.log("Имя узла: " + document.nodeName); // Имя узла: #document
-// ================nodeValue==========================
+window.jQuery = window.$ = _jquery.default;
+console.log(jQuery('h1')); // JQuery Получить DOM-элемент body
 
-console.log("значение узла: " + document.nodeValue); // значение узла: null
-// Любой доступ и изменения DOM происходит через объект document.
-// ================Доступ к элементам==========================
+console.log((0, _jquery.default)("body")); // JQuery Получить все элементы div
 
-console.log("Document Element: " + document.documentElement); // Document Element: [object HTMLHtmlElement]
-// В случае корректной HTML-страницы, это будет <html>.
+console.log((0, _jquery.default)('div')); // JQuery Получить #touch-me
 
-console.log("Body Element: " + document.body); // Body Element: [object HTMLBodyElement], если есть в документе (обязан быть).
-// Все дочерние элементы, включая текстовые находятся в массиве childNodes.
+console.log((0, _jquery.default)('#touch-me')); // JQuery Получить все элементы span внутри div
 
-console.log('Все дочерние элементы ', document.body.childNodes); // Атрибут tagName есть у элементов и содержит имя тага в верхнем регистре, только для чтения.
-// имя тага
+console.log((0, _jquery.default)((0, _jquery.default)('div span'))); // JQuery Получить все элементы span внутри div
 
-console.log(document.body.tagName); // BODY
-// Можно поменять цвет BODY: -->
+console.log((0, _jquery.default)((0, _jquery.default)((0, _jquery.default)('div').find('span')))); // JQuery Получить все элементы span внутри div
 
-document.body.style.backgroundColor = 'red'; // Можно поменять цвет текста:
+console.log((0, _jquery.default)((0, _jquery.default)('div > span'))); // Например, выбрать все элементы, имеющие класс btn:
 
-document.body.style.color = 'white'; // Можно вернуть обратно:
+console.log((0, _jquery.default)(".btn")); // также можно записать следующим образом:
 
-document.body.style.backgroundColor = '';
-document.body.style.color = ''; // innerHTML
-// Свойство innerHTML – позволяет получать и изменять полностью всё содержимое, лежащее между открывающим и закрывающим тегами объекта.
-// Свойство innerHTML применяется, в основном, для динамического изменения содержания страницы, например:
-// document.body.innerHTML = '<h1 id="bye">Bye! See ya!</h1>';
-// getElementById
-// document.getElementById("bye").style.color ="yellow";
-// document.getElementById("main").innerHTML = '<h1 id="bye" class="see">Bye! See ya!</h1><div id="content-holder"><div id="content">Элемент</div></div>';
-// document.getElementById("bye").style.color ="red";
-// document.getElementById('content').innerHTML = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero tempore necessitatibus obcaecati accusamus ullam autem ut iste, vel suscipit adipisci officiis doloribus dolores quasi minus pariatur ex omnis modi neque?';
-// document.getElementById('content-holder').style.color ="blue";
-// getElementsByTagName
-// document.body.getElementsByTagName('h1')[0].innerHTML="Hello world";
-// Свойство textContent используется для получения и установки текста узла.
-// document.getElementsByTagName('h1')[0].textContent = 'Hello Text Content!';
-// querySelectorAll
-// document.querySelectorAll('h1')[0].textContent = 'Hello querySelectorAll Text Content!';
-// querySelector
-// document.querySelector('h1').textContent = 'Hello JavaScript!';
-// Метод getElementsByClassName находит массив объектов определенного класса.
-// getElementsByClassName
-// document.getElementsByClassName('see')[0].innerHTML = 'Hello JavaScript ClassName!';
+console.log((0, _jquery.default)("*.btn"));
+(0, _jquery.default)(".filter li:first").css("color", "green");
+(0, _jquery.default)(".filter li:contains('Item 3')").css("color", "yellow"); // JQuery Получить элемент перед .plus
 
-function showMessage() {
-  alert('Привет всем присутствующим!');
-} // showMessage();
+console.log((0, _jquery.default)('.plus').prev()); // JQuery Получить элемент после #banner
 
+console.log((0, _jquery.default)('.minus').next());
+(0, _jquery.default)(document).ready(function () {
+  console.log('Bla, Bla, Bla...'); // $('p').css('border', '3px solid blue');
+  // // получим значение background у элемента a
+  // var background = $('.nav li a').css('background-color');
+  // console.log(background);     // выведем его в консоль
+  // var cssProperties = $('p').css(['width','height']);
+  // console.log(cssProperties);
+  // $("a").css("color", "red");
+  // $('div').css({
+  //     'color':'green',
+  //     'font-size':'16px'
+  // });
+  // var newCSS = {
+  //     'color':'green',
+  //     'font-size':'16px'
+  // };
+  // $('p').css(newCSS);
+  // $('p').css({
+  //     "padding-left": "+=10",
+  //     "padding-right":"+=10", 
+  //     "padding-top": "+=10"
+  // });
+}); // $(document).ready(ready);
+// function ready() {
+//     $("p").text("Структура документа загружена и полностью сформирована!");
+// }
+// $().ready(ready);
+// $(function() {
+//     //DOM-дерево готово
+//     $("p").text("Структура документа загружена и полностью сформирована!");
+// });
 
-function square(number) {
-  return number * number;
+function square(x) {
+  return x * x;
 }
 
-function sum(number1, number2) {
-  return number1 + number2;
+var i = 2;
+
+function setMessageText(msg) {
+  (0, _jquery.default)('.count').text(msg);
 }
 
-sum(1, 2);
+setMessageText("The Square of " + i + " is " + square(i));
+(0, _jquery.default)('.count').click(function () {
+  i++;
+  setMessageText("The Square of " + i + " is " + square(i));
+}); //  Получить HTML
+// Получить HTML Native
 
-function hiMessage() {
-  var message = 'Привет!'; // локальная переменная
+console.log(el.innerHTML); // Получить HTML jQuery
 
-  alert(message);
-} // hiMessage(); // 'Привет!'
+console.log((0, _jquery.default)('#el').html()); // Присвоить HTML
 
+var htmlString = 'Hello Element'; // Присвоить HTML jQuery
 
-var userName = 'Jhon';
+(0, _jquery.default)('#el').html(htmlString); // Присвоить HTML Native
 
-function showMessageUser() {
-  var message = 'Привет ' + userName;
-  alert(message);
-} // showMessageUser(); // Привет Jhon
+el.innerHTML = htmlString;
+},{"jquery":"../node_modules/jquery/dist/jquery.js"}],"js/jqapp.js":[function(require,module,exports) {
+"use strict";
 
+var _jquery = _interopRequireDefault(require("jquery"));
 
-function heyMessage(from, text) {
-  if (text === undefined) {
-    text = 'текст не передан';
-  } // text = text || 'текст не передан';
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-
-  alert(from + ": " + text);
-}
-},{}],"index.js":[function(require,module,exports) {
+// (function() {
+// document.querySelector('#dismiss, .overlay').addEventListener('click', function(){
+//     document.getElementById('sidebar').classList.remove('active');
+//     document.querySelector('.overlay').classList.remove('active');
+// })
+//     document.getElementById('sidebarCollapse').addEventListener('click', function(){
+//         document.getElementById('sidebar').classList.add('active');
+//         document.querySelector('.overlay').classList.add('active');
+//         document.querySelector('.collapse.in').classList.toggle('in');
+//         document.querySelector('a[aria-expanded=true]').setAttribute('aria-expanded', 'false');
+//     })
+// })();
+(0, _jquery.default)(function () {
+  (0, _jquery.default)('#dismiss, .overlay').on('click', function () {
+    (0, _jquery.default)('#sidebar').removeClass('active');
+    (0, _jquery.default)('.overlay').removeClass('active');
+  });
+  (0, _jquery.default)('#sidebarCollapse').on('click', function () {
+    (0, _jquery.default)('#sidebar').addClass('active');
+    (0, _jquery.default)('.overlay').addClass('active');
+    (0, _jquery.default)('.collapse.in').toggleClass('in');
+    (0, _jquery.default)('a[aria-expanded=true]').attr('aria-expanded', 'false');
+  });
+  (0, _jquery.default)('.add-to-cart').on('click', function () {
+    (0, _jquery.default)('.product-name').css('color', 'green');
+    (0, _jquery.default)('.product-price').css('color', 'red');
+  });
+  (0, _jquery.default)('.view-detail').on('click', function () {
+    (0, _jquery.default)('.product-name').css('color', 'green');
+    (0, _jquery.default)('.product-description').css('color', 'blue');
+  });
+});
+},{"jquery":"../node_modules/jquery/dist/jquery.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 require("bootstrap");
@@ -18071,7 +18105,7 @@ var _jquery = _interopRequireDefault(require("jquery"));
 require("./js/test");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"bootstrap":"../node_modules/bootstrap/dist/js/bootstrap.js","jquery":"../node_modules/jquery/dist/jquery.js","./js/test":"js/test.js"}],"../../../.nvm/versions/node/v12.6.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"bootstrap":"../node_modules/bootstrap/dist/js/bootstrap.js","jquery":"../node_modules/jquery/dist/jquery.js","./js/test":"js/test.js","./js/jqapp":"js/jqapp.js"}],"../../../.nvm/versions/node/v12.6.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -18099,7 +18133,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46183" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36205" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

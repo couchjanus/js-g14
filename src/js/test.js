@@ -1,115 +1,125 @@
-// Доступ к свойствам осуществляется по имени свойства (по ключу).
+'use strict';
+import $ from 'jquery';
 
-console.log(document.body); // BODY
-console.log(document.title); // title
+window.jQuery = window.$ = $;
 
-// ================nodeType==========================
-console.log("тип узла: " + document.nodeType);
-// тип узла: 9
+console.log(jQuery('h1'));
+        
+// JQuery Получить DOM-элемент body
+console.log($("body"));
 
-// ================nodeName==========================
-console.log("Имя узла: " + document.nodeName);
-// Имя узла: #document
+// JQuery Получить все элементы div
+console.log($('div'));
 
-// ================nodeValue==========================
-console.log("значение узла: " + document.nodeValue);
-// значение узла: null
+// JQuery Получить #touch-me
 
-// Любой доступ и изменения DOM происходит через объект document.
-// ================Доступ к элементам==========================
-console.log("Document Element: " + document.documentElement);
-// Document Element: [object HTMLHtmlElement]
+console.log($('#touch-me'));
 
-// В случае корректной HTML-страницы, это будет <html>.
-console.log("Body Element: " + document.body);
-// Body Element: [object HTMLBodyElement], если есть в документе (обязан быть).
+// JQuery Получить все элементы span внутри div
+console.log($($('div span')));
+      
+// JQuery Получить все элементы span внутри div
+console.log($($($('div').find('span'))));
+       
+// JQuery Получить все элементы span внутри div
+console.log($($('div > span')));
 
-// Все дочерние элементы, включая текстовые находятся в массиве childNodes.
-console.log('Все дочерние элементы ', document.body.childNodes);
+// Например, выбрать все элементы, имеющие класс btn:
+console.log($(".btn"));
+// также можно записать следующим образом:
+console.log($("*.btn"));
 
-// Атрибут tagName есть у элементов и содержит имя тага в верхнем регистре, только для чтения.
-// имя тага
-console.log(document.body.tagName); // BODY
+$(".filter li:first").css("color", "green");
 
-
-// Можно поменять цвет BODY: -->
-document.body.style.backgroundColor = 'red';
-
-// Можно поменять цвет текста:
-document.body.style.color = 'white';
+$(".filter li:contains('Item 3')").css("color", "yellow");
 
 
-// Можно вернуть обратно:
-document.body.style.backgroundColor = '';
-document.body.style.color = '';
+// JQuery Получить элемент перед .plus
+console.log($('.plus').prev());
 
-// innerHTML
-// Свойство innerHTML – позволяет получать и изменять полностью всё содержимое, лежащее между открывающим и закрывающим тегами объекта.
-// Свойство innerHTML применяется, в основном, для динамического изменения содержания страницы, например:
-// document.body.innerHTML = '<h1 id="bye">Bye! See ya!</h1>';
+// JQuery Получить элемент после #banner
+console.log($('.minus').next());
 
-// getElementById
-// document.getElementById("bye").style.color ="yellow";
+$(document).ready(
+    function(){
+        console.log('Bla, Bla, Bla...');
+        // $('p').css('border', '3px solid blue');
+        // // получим значение background у элемента a
+        // var background = $('.nav li a').css('background-color');
+        // console.log(background);     // выведем его в консоль
+
+        // var cssProperties = $('p').css(['width','height']);
+        // console.log(cssProperties);
+        // $("a").css("color", "red");
+
+        // $('div').css({
+        //     'color':'green',
+        //     'font-size':'16px'
+        // });
+
+        // var newCSS = {
+        //     'color':'green',
+        //     'font-size':'16px'
+        // };
+        
+        // $('p').css(newCSS);
+
+        // $('p').css({
+        //     "padding-left": "+=10",
+        //     "padding-right":"+=10", 
+        //     "padding-top": "+=10"
+        // });
+            
 
 
-// document.getElementById("main").innerHTML = '<h1 id="bye" class="see">Bye! See ya!</h1><div id="content-holder"><div id="content">Элемент</div></div>';
-// document.getElementById("bye").style.color ="red";
-
-// document.getElementById('content').innerHTML = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero tempore necessitatibus obcaecati accusamus ullam autem ut iste, vel suscipit adipisci officiis doloribus dolores quasi minus pariatur ex omnis modi neque?';
-// document.getElementById('content-holder').style.color ="blue";
-
-// getElementsByTagName
-// document.body.getElementsByTagName('h1')[0].innerHTML="Hello world";
-
-// Свойство textContent используется для получения и установки текста узла.
-
-// document.getElementsByTagName('h1')[0].textContent = 'Hello Text Content!';
-
-// querySelectorAll
-// document.querySelectorAll('h1')[0].textContent = 'Hello querySelectorAll Text Content!';
-
-// querySelector
-// document.querySelector('h1').textContent = 'Hello JavaScript!';
-
-// Метод getElementsByClassName находит массив объектов определенного класса.
-// getElementsByClassName
-// document.getElementsByClassName('see')[0].innerHTML = 'Hello JavaScript ClassName!';
-
-
-function showMessage() {
-    alert( 'Привет всем присутствующим!' );
-}
-
-// showMessage();
-
-function square(number) {
-    return number * number;
-}
-
-function sum(number1 , number2) {
-    return number1 + number2;
-  }
-sum(1, 2);
-
-function hiMessage() {
-    var message = 'Привет!'; // локальная переменная
-    alert( message );
-}
-// hiMessage(); // 'Привет!'
-
-var userName = 'Jhon';
-   function showMessageUser() {
-       var message = 'Привет ' + userName;
-       alert(message);
-   }
-// showMessageUser(); // Привет Jhon
-
-function heyMessage(from, text) {
-    if (text === undefined) {
-        text = 'текст не передан';
     }
-    // text = text || 'текст не передан';
+);
 
-    alert( from + ": " + text );
+// $(document).ready(ready);
+
+// function ready() {
+//     $("p").text("Структура документа загружена и полностью сформирована!");
+// }
+    
+// $().ready(ready);
+ 
+// $(function() {
+//     //DOM-дерево готово
+//     $("p").text("Структура документа загружена и полностью сформирована!");
+// });
+
+
+
+function square(x) {
+    return x * x;
 }
+
+let i = 2;
+
+function setMessageText(msg) {
+    $('.count').text(msg);
+}
+
+setMessageText("The Square of " + i + " is " + square(i));
+
+$('.count').click(() => {
+    i++;
+    setMessageText("The Square of " + i + " is " + square(i));
+})
+
+
+//  Получить HTML
+// Получить HTML Native
+console.log(el.innerHTML);
+
+// Получить HTML jQuery
+console.log($('#el').html());
+
+// Присвоить HTML
+let htmlString = 'Hello Element';
+// Присвоить HTML jQuery
+$('#el').html(htmlString);
+
+// Присвоить HTML Native
+el.innerHTML = htmlString;
 
