@@ -1,125 +1,159 @@
 'use strict';
 import $ from 'jquery';
-
 window.jQuery = window.$ = $;
 
-console.log(jQuery('h1'));
-        
-// JQuery Получить DOM-элемент body
-console.log($("body"));
+// let addToCart = document.querySelector('.add-to-cart');
 
-// JQuery Получить все элементы div
-console.log($('div'));
+// addToCart.addEventListener('click', function () {
+//     let y = 180;
+//     document.querySelector('.card-img-top').style.transform = 'rotateY(' + y + 'deg)';
+// }); 
 
-// JQuery Получить #touch-me
+// Синтаксис для создания нового массива:
+var arr = new Array(); // Создали новый пустой массив []
+var arrs = []; // Тоже создали новый пустой массив []
+  // Создание элементов массива возможно несколькими способами:
 
-console.log($('#touch-me'));
+var earth = new Array(4); /* массив из 4-х элементов*/
 
-// JQuery Получить все элементы span внутри div
-console.log($($('div span')));
-      
-// JQuery Получить все элементы span внутри div
-console.log($($($('div').find('span'))));
-       
-// JQuery Получить все элементы span внутри div
-console.log($($('div > span')));
+earth[0] = "Earth";
+earth[1] = "24 h";
+earth[2] = 6378;
+earth[3] = 365.25;
 
-// Например, выбрать все элементы, имеющие класс btn:
-console.log($(".btn"));
-// также можно записать следующим образом:
-console.log($("*.btn"));
+// var earth = new Array("Earth", "24 h", 6378, 365.25);
 
-$(".filter li:first").css("color", "green");
+// var earth = new Array(); // пустой массив
+// earth.xtype = "Solar";
+// earth.xday = "24 h";
+// earth.radius = 6378;
+// earth.period = 365.25;
 
-$(".filter li:contains('Item 3')").css("color", "yellow");
+var country = ["UK", "USA", "GB"];
+// Если вы указываете числа или значения true или false при определении массива, то тип переменной будет числовой или булев тип, а не строковый.
 
+var arr1 = ['первый элемент', 'второй элемент'];
+console.log(arr1[0]);              // напечатает 'первый элемент'
+console.log(arr1[1]);              // напечатает 'второй элемент'
 
-// JQuery Получить элемент перед .plus
-console.log($('.plus').prev());
+// Обращение или доступ к элементам массива в javaScript:
 
-// JQuery Получить элемент после #banner
-console.log($('.minus').next());
+var mas=new Array(1,25,'Hey');
+mas[0]='Bye';
+mas[1]=35;
 
-$(document).ready(
-    function(){
-        console.log('Bla, Bla, Bla...');
-        // $('p').css('border', '3px solid blue');
-        // // получим значение background у элемента a
-        // var background = $('.nav li a').css('background-color');
-        // console.log(background);     // выведем его в консоль
+// Свойство массивов length взаимосвязано с числом свойств.
+var fruits = [];
+fruits.push('банан', 'яблоко', 'персик');
+console.log(fruits.length); // 3
 
-        // var cssProperties = $('p').css(['width','height']);
-        // console.log(cssProperties);
-        // $("a").css("color", "red");
+// Длина length – не количество элементов массива, а последний индекс + 1.
+var arr2 = [];
+arr2[1000] = true;
+console.log(arr2.length); // 1001
 
-        // $('div').css({
-        //     'color':'green',
-        //     'font-size':'16px'
-        // });
-
-        // var newCSS = {
-        //     'color':'green',
-        //     'font-size':'16px'
-        // };
-        
-        // $('p').css(newCSS);
-
-        // $('p').css({
-        //     "padding-left": "+=10",
-        //     "padding-right":"+=10", 
-        //     "padding-top": "+=10"
-        // });
-            
+// При уменьшении length массив укорачивается.
+var arr3 = [1, 2, 3, 4, 5];
+arr3.length = 2; // укоротить до 2 элементов
+console.log(arr3[3] );
+arr3.length = 5; // вернуть length обратно, как было
+console.log(arr3[3]); // undefined: значения не вернулись
 
 
-    }
-);
+// перебор элементов массива addToCarts:
+// let addToCarts = document.getElementsByClassName('add-to-cart');
 
-// $(document).ready(ready);
+// console.log(addToCarts.length);
 
-// function ready() {
-//     $("p").text("Структура документа загружена и полностью сформирована!");
+// for (let i = 0; i < addToCarts.length; i++) {
+//        console.log(addToCarts[i]);
 // }
-    
-// $().ready(ready);
- 
-// $(function() {
-//     //DOM-дерево готово
-//     $("p").text("Структура документа загружена и полностью сформирована!");
+
+// for (let i=0; i<addToCarts.length; i++ ){
+//     addToCarts[i].addEventListener('click', function (e) {
+//         // console.log(e);
+//         // console.log(e.target);
+//         // e.target.style.display = 'none';
+        
+        
+//         // ==========parentNode==============
+//         // console.log(e.target.parentNode);
+//         // console.log(e.target.parentNode.parentNode.parentNode.parentNode);
+        
+//         // =========childNodes==============
+//         // console.log(e.target.parentNode.parentNode.parentNode.parentNode.childNodes);
+        
+//         // ===========childElementCount==========
+//         // console.log(e.target.parentNode.parentNode.parentNode.parentNode.childElementCount);
+        
+//         // ===========children childElementCount=========
+//         console.log(e.target.parentNode.parentNode.parentNode.parentNode.children);
+//         console.log(e.target.parentNode.parentNode.parentNode.parentNode.childElementCount);
+        
+//         let y = 180;
+//         // e.target.parentNode.parentNode.parentNode.parentNode.children[0].style.transform = 'rotateY(' + y + 'deg)';
+
+//         // =========firstChild lastChild==============
+//         console.log(e.target.parentNode.parentNode.parentNode.parentNode.firstChild);
+//         console.log(e.target.parentNode.parentNode.parentNode.parentNode.lastChild);
+        
+//         // =========nextSibling previousSibling=============
+//         console.log(e.target.parentNode.parentNode.parentNode.parentNode.firstChild.nextSibling);
+//         console.log(e.target.parentNode.parentNode.parentNode.parentNode.lastChild.previousSibling);
+        
+//         // ========firstElementChild lastElementChild==========
+//         console.log(e.target.parentNode.parentNode.parentNode.parentNode.firstElementChild);
+
+//         e.target.parentNode.parentNode.parentNode.parentNode.firstElementChild.style.transform = 'rotateY(' + y + 'deg)';
+
+//         console.log(e.target.parentNode.parentNode.parentNode.parentNode.lastElementChild);
+        
+//     });
+// }
+
+// for (let i=0; i<addToCarts.length; i++ ){
+//   addToCarts[i].addEventListener('click', function () {
+//       console.log(this);
+//       let y = 180;
+//       console.log(this.parentNode.parentNode.parentNode.parentNode.firstElementChild);
+//       this.parentNode.parentNode.parentNode.parentNode.firstElementChild.style.transform = 'rotateY(' + y + 'deg)';
+//   });
+// }
+
+
+// for (let i=0; i<addToCarts.length; i++ ){
+//   addToCarts[i].addEventListener('click', function () {
+//       let y = 180;
+//       // this.parentNode.parentNode.parentNode.parentNode.firstElementChild.style.transform = 'rotateY(' + y + 'deg)';
+//       this.closest(".card").firstElementChild.style.transform = 'rotateY(' + y + 'deg)';
+//   });
+// }
+
+// let addToCarts = document.querySelectorAll('.add-to-cart');
+// // console.log(addToCarts);
+
+// addToCarts.forEach(function(addToCart){
+//     addToCart.addEventListener('click', function() {
+//         let y = 180;
+//         this.closest(".card").firstElementChild.style.transform = 'rotateY(' + y + 'deg)';
+//     });
 // });
 
+// let plus = document.querySelectorAll('.plus');
+// plus.forEach(function(el){
+//   el.addEventListener('click', function() {
+//     let val = this.previousElementSibling.innerText;
+//     val = this.previousElementSibling.innerText = val+1;
+//   });
+// });
 
+// let minus = document.querySelectorAll('.minus');
 
-function square(x) {
-    return x * x;
-}
-
-let i = 2;
-
-function setMessageText(msg) {
-    $('.count').text(msg);
-}
-
-setMessageText("The Square of " + i + " is " + square(i));
-
-$('.count').click(() => {
-    i++;
-    setMessageText("The Square of " + i + " is " + square(i));
-})
-
-
-//  Получить HTML
-// Получить HTML Native
-console.log(el.innerHTML);
-
-// Получить HTML jQuery
-console.log($('#el').html());
-
-// Присвоить HTML
-let htmlString = 'Hello Element';
-// Присвоить HTML jQuery
-$('#el').html(htmlString);
-
-// Присвоить HTML Native
-el.innerHTML = htmlString;
-
+// minus.forEach(function(el){
+//   el.addEventListener('click', function() {
+//     let val = this.nextElementSibling.innerText;
+//     if (val > 1) {
+//       val = this.nextElementSibling.innerText = val-1;
+//     }
+//   });
+// });

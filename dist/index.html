@@ -8,7 +8,6 @@
   <title>My Project</title>
   <link href="/all.min.9134e03e.css" rel="stylesheet">
   <link href="/main.07544d9b.css" rel="stylesheet">
-
 <script src="/all.min.9134e03e.js"></script><script src="/main.07544d9b.js"></script></head>
 
 <body>
@@ -23,27 +22,21 @@
       <div class="sidebar-header">
         <h3>Your Cart :</h3>
       </div>
-
-      <ul class="list-unstyled components">
-        <li>
-          <div class="view">
-            <div class="img"></div>
-            <div class="title">
-              <p>Product name</p>
-              <div class="amount">
-                <button class="adding" title="Open"><i class="fas fa-minus-circle"></i></button>
-                <span class="adding">1</span>
-                <button class="adding" title="Add"><i class="fas fa-plus-circle"></i></button>
-                <span class="price">$00.00</span>
-              </div>
-            </div>
+      
+      <div class="cart-items">
+        <div class="cart-item">
+          <div class="item item-name">Product name <span class="float-right"><i class="far fa-times-circle"></i></span></div>
+          <div class="item item-img"> </div>
+          
+          <div class="item item-quontity">
+            <button class="adding minus" title="Open"><i class="fas fa-minus-circle"></i></button>
+            <span class="adding quontity">1</span>
+            <button class="adding plus" title="Add"><i class="fas fa-plus-circle"></i></button>
           </div>
-          <div class="interactions">
-            <i class="far fa-times-circle"></i>
-          </div>
-        </li>
-
-      </ul>
+          <div class="item">$<span class="item-price">55.00</span></div>
+        </div>
+      </div>
+      
 
       <div class="footer">
         <div class="counts">

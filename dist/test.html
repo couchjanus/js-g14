@@ -7,6 +7,12 @@
   <title>My Project</title>
   <link href="/all.min.9134e03e.css" rel="stylesheet">
   <link href="/main.07544d9b.css" rel="stylesheet">
+
+  <style>/*.card-img-top { -->
+    transition: transform 0.7s ease;
+    transform-style: preserve-3d;
+  }
+*/</style>
 <script src="/all.min.9134e03e.js"></script><script src="/main.07544d9b.js"></script></head>
 <body>
   <div class="wrapper" id="main">
@@ -104,35 +110,62 @@
       </nav>
       
       <div class="album py-5 bg-light">
-        <span>dolor sit amet consectetur adipisicing</span> elit. Repudiandae esse omnis corporis, assumenda ipsam optio quaerat deserunt animi laudantium, <span>aspernatur non. Beatae impedit sit libero</span>
-
         <div class="container">
-            <input value="Нажми меня" id="touch-me" type="button">
-        </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                <img class="card-img-top" src="/03.fd463baf.jpg" alt="Card image cap">
+                <div class="card-body">
+                  <h4 class="float-right">$85.00</h4>
+                  <h4 class="product-name">Fierst product</h4>
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                    additional content. This content is a little bit longer.</p>
 
-        <p id="el">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis, unde id laborum ad consequatur, similique aliquid doloremque laudantium, inventore molestiae minus ratione omnis tempora nostrum provident! Officiis facere odio quaerat.</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary view-detail">View Detail</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary add-to-cart">Add To Cart</button>
+                    </div>
+                    <small class="text-muted">31 reviews</small>
+                  </div>
 
-
-        <p>Lorem ipsum, <span>dolor sit amet consectetur adipisicing</span> elit. Repudiandae esse omnis corporis, assumenda ipsam optio quaerat deserunt animi laudantium, <span>aspernatur non. Beatae impedit sit libero</span> ex ad molestiae deserunt vel?</p>
-
-        <button class="btn">Button</button>
-
-        <div class="filter">
-          <li>Item 1</li>
-          <li>Item 2</li>
-          <li>Item 3</li>
-          <li>Item 4</li>
-          <li>Item 5</li>
-        </div>
-
-        <div class="title">
-            <p>Product name</p>
-            <div class="amount">
-              <button class="adding minus" title="Open"><i class="fas fa-minus-circle"></i></button>
-              <span class="adding">1</span>
-              <button class="adding plus" title="Add"><i class="fas fa-plus-circle"></i></button>
-              <span class="price">$00.00</span>
+                </div>
+              </div>
             </div>
+            <div class="col-md-4">
+                <div class="card mb-4 box-shadow">
+                  <img class="card-img-top" src="/03.fd463baf.jpg" alt="Card image cap">
+                  <div class="card-body">
+                    <h4 class="float-right">$85.00</h4>
+                    <h4 class="product-name">Fierst product</h4>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                      additional content. This content is a little bit longer.</p>
+  
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary view-detail">View Detail</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary add-to-cart">Add To Cart</button>
+                      </div>
+                      <small class="text-muted">31 reviews</small>
+                    </div>
+  
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="py-5">
+        <div class="container">
+          <div class="item item-quontity">
+            <button class="adding minus" title="Open"><i class="fas fa-minus-circle"></i></button>
+            <span class="adding quontity">1</span>
+            <button class="adding plus" title="Add"><i class="fas fa-plus-circle"></i></button>
+          </div>
+          <div class="item">
+            $<span class="item-price">55.00</span>
+          </div>
         </div>
       </div>
 
