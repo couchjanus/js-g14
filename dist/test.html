@@ -12,7 +12,13 @@
     transition: transform 0.7s ease;
     transform-style: preserve-3d;
   }
-*/</style>
+*/
+.item-img{
+  padding: 1em;
+  width: 200px;
+  height: 200px;
+  background: steelblue;
+}</style>
 <script src="/all.min.9134e03e.js"></script><script src="/main.07544d9b.js"></script></head>
 <body>
   <div class="wrapper" id="main">
@@ -116,7 +122,7 @@
               <div class="card mb-4 box-shadow">
                 <img class="card-img-top" src="/03.fd463baf.jpg" alt="Card image cap">
                 <div class="card-body">
-                  <h4 class="float-right">$85.00</h4>
+                  <h4 class="float-right">$<span class="product-price">85.00</span></h4>
                   <h4 class="product-name">Fierst product</h4>
                   <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
                     additional content. This content is a little bit longer.</p>
@@ -134,9 +140,9 @@
             </div>
             <div class="col-md-4">
                 <div class="card mb-4 box-shadow">
-                  <img class="card-img-top" src="/03.fd463baf.jpg" alt="Card image cap">
+                  <img class="card-img-top" src="/02.cafa12f0.jpg" alt="Card image cap">
                   <div class="card-body">
-                    <h4 class="float-right">$85.00</h4>
+                    <h4 class="float-right">$<span class="product-price">55.00</span></h4>
                     <h4 class="product-name">Fierst product</h4>
                     <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
                       additional content. This content is a little bit longer.</p>
@@ -156,18 +162,25 @@
         </div>
       </div>
 
-      <div class="py-5">
-        <div class="container">
+
+      <div class="sidebar-header">
+        <h3>Your Cart :</h3>
+      </div>
+      
+      <div class="cart-items">
+        <div class="cart-item">
+          <div class="item item-name">Product name <span class="float-right"><i class="far fa-times-circle"></i></span></div>
+          <div class="item item-img"> </div>
+          
           <div class="item item-quontity">
             <button class="adding minus" title="Open"><i class="fas fa-minus-circle"></i></button>
             <span class="adding quontity">1</span>
             <button class="adding plus" title="Add"><i class="fas fa-plus-circle"></i></button>
           </div>
-          <div class="item">
-            $<span class="item-price">55.00</span>
-          </div>
+          <div class="item">$<span class="item-price">55.00</span></div>
         </div>
       </div>
+
 
       <div class="container">
         <footer class="pt-4 my-md-5 pt-md-5 border-top">
@@ -213,7 +226,19 @@
     </div>
   </div>
   <div class="overlay"></div>    
-
+  <template id="cartItem">
+    <div class="cart-item">
+      <div class="item item-name">Product name <span class="float-right"><i class="far fa-times-circle"></i></span></div>
+      <div class="item item-img"> </div>
+      
+      <div class="item item-quontity">
+        <button class="adding minus" title="Open"><i class="fas fa-minus-circle"></i></button>
+        <span class="adding quontity">1</span>
+        <button class="adding plus" title="Add"><i class="fas fa-plus-circle"></i></button>
+      </div>
+      <div class="item">$<span class="item-price">55.00</span></div>
+    </div>
+  </template>
   <script src="/src.e31bb0bc.js"></script>
 </body>
 </html>
