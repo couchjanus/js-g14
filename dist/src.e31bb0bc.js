@@ -18037,6 +18037,40 @@ exports.data = data;
 
 var _data = require("./data.js");
 
+function makeProductItem($template, product) {
+  $template.querySelector('.col-md-4').setAttribute('productId', product.id);
+  $template.querySelector('.product-name').textContent = product.name;
+  $template.querySelector('.card-img-top').setAttribute('src', 'images/' + product.picture[0]);
+  $template.querySelector('img').setAttribute('alt', product.name);
+  $template.querySelector('.product-price').textContent = product.price;
+  return $template;
+}
+
+function slideItem(content, item, i) {
+  content.querySelector('.carousel-item__title').textContent = item.name;
+  content.querySelector('.carousel-item__subtitle').textContent = item.subtitle[i];
+  content.querySelector('.carousel-item__description').textContent = item.description;
+  content.querySelector('.carousel-item__image').style.backgroundImage = 'url(images/' + item.picture[i] + ')';
+  return content;
+}
+
+function addProductToCart(content, item) {
+  content.querySelector('.item-title').textContent = item.querySelector('.product-name').textContent;
+  content.querySelector('.item-price').textContent = item.querySelector('.product-price').textContent;
+  content.querySelector('.item-price').setAttribute('price', item.querySelector('.product-price').textContent);
+  content.querySelector('.item-img').style.backgroundImage = 'url(' + item.querySelector('img').getAttribute('src') + ')';
+  return content;
+}
+
+function _translate(img) {
+  var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : -150;
+  var rect = img.getBoundingClientRect();
+  var elements = ['translate3D('];
+  elements.push(rect.left - offset + 'px,');
+  elements.push(rect.top - offset + 'px,0)');
+  return elements.join('');
+}
+
 (function () {
   document.querySelector('#dismiss, .overlay').addEventListener('click', function () {
     document.getElementById('sidebar').classList.remove('active');
@@ -18046,16 +18080,6 @@ var _data = require("./data.js");
     document.getElementById('sidebar').classList.add('active');
     document.querySelector('.overlay').classList.add('active');
   });
-
-  function makeProductItem($template, product) {
-    $template.querySelector('.col-md-4').setAttribute('productId', product.id);
-    $template.querySelector('.product-name').textContent = product.name;
-    $template.querySelector('.card-img-top').setAttribute('src', 'images/' + product.picture[0]);
-    $template.querySelector('img').setAttribute('alt', product.name);
-    $template.querySelector('.product-price').textContent = product.price;
-    return $template;
-  }
-
   var template = document.getElementById('productItem').content;
 
   _data.data.forEach(function (el) {
@@ -18090,32 +18114,7 @@ var _data = require("./data.js");
       _el.parentNode.nextElementSibling.querySelector('.item-price').innerText = parseFloat(_price * _val).toFixed(2);
     }
   }, false);
-  var addToCarts = document.querySelectorAll('.add-to-cart');
-
-  function addProductToCart(content, item) {
-    content.querySelector('.item-title').textContent = item.querySelector('.product-name').textContent;
-    content.querySelector('.item-price').textContent = item.querySelector('.product-price').textContent;
-    content.querySelector('.item-price').setAttribute('price', item.querySelector('.product-price').textContent);
-    content.querySelector('.item-img').style.backgroundImage = 'url(' + item.querySelector('img').getAttribute('src') + ')';
-    return content;
-  }
-
-  addToCarts.forEach(function (addToCart) {
-    addToCart.addEventListener('click', function () {
-      this.closest('.card').firstElementChild.style.transform = 'rotateY(180deg)';
-      document.querySelector('.cart-items').append(document.importNode(addProductToCart(content, this.closest('.card')), true));
-    });
-  });
   var viewDetails = document.querySelectorAll('.view-detail');
-
-  function slideItem(content, item, i) {
-    content.querySelector('.carousel-item__title').textContent = item.name;
-    content.querySelector('.carousel-item__subtitle').textContent = item.subtitle[i];
-    content.querySelector('.carousel-item__description').textContent = item.description;
-    content.querySelector('.carousel-item__image').style.backgroundImage = 'url(images/' + item.picture[i] + ')';
-    return content;
-  }
-
   viewDetails.forEach(function (element) {
     element.addEventListener('click', function () {
       var dataId = this.closest('.col-md-4').getAttribute('productId');
@@ -18161,6 +18160,74 @@ var _data = require("./data.js");
       }
     });
   });
+  var addToCarts = document.querySelectorAll('.add-to-cart');
+  addToCarts.forEach(function (addToCart) {
+    addToCart.addEventListener('click', function () {
+      document.querySelector('.cart-items').append(document.importNode(addProductToCart(content, this.closest('.card')), true));
+      var imgItem = this.closest('.card').querySelector('img');
+      var win = this.closest('.card').querySelector('.win'); // let rectOrigin = imgItem.getBoundingClientRect();
+      // let toLeftStart = rectOrigin.left + 'px';
+      // let toTopStart = rectOrigin.top + 'px';
+      // console.log(toLeftStart, toTopStart);
+
+      if (imgItem) {
+        var imgClone = imgItem.cloneNode(true); // imgClone.style.left = 0;
+        // imgClone.style.top = 0;
+        // imgClone.style.height = '150px';
+        // imgClone.style.width = '150px';
+
+        imgClone.classList.add('offset-img');
+        document.body.appendChild(imgClone);
+        imgItem.style.transform = 'rotateY(180deg)';
+        win.style.display = 'block';
+
+        imgClone.animate([{
+          transform: _translate(imgItem)
+        }, {
+          transform: _translate(document.querySelector('#sidebarCollapse'), 50) + 'perspective(500px) scale3d(0.1, 0.1, 0.2)'
+        }], {
+          duration: 2000
+        }).onfinish = function () {
+          imgClone.remove();
+          imgItem.style.transform = 'rotateY(0deg)';
+          win.style.display = 'none';
+        }; // let rect = document
+        //     .querySelector('#sidebarCollapse')
+        //     .getBoundingClientRect();
+        // let toLeft = rect.left - 50 + 'px';
+        // let toTop = rect.top - 50 + 'px';
+        // imgClone.animate(
+        //     [
+        //         {
+        //             transform:
+        //                 'translate3D(' +
+        //                 toLeftStart +
+        //                 ',' +
+        //                 toTopStart +
+        //                 ', 0)',
+        //         },
+        //         {
+        //             transform:
+        //                 'translate3D(' +
+        //                 toLeft +
+        //                 ',' +
+        //                 toTop +
+        //                 ',0) perspective(500px) scale3d(0.1, 0.1, 0.2)',
+        //         },
+        //     ],
+        //     {
+        //         duration: 2000,
+        //     }
+        // )
+        // .onfinish = function() {
+        //     imgClone.remove();
+        //     imgItem.style.transform = 'rotateY(0deg)';
+        //     win.style.display = 'none';
+        // };
+
+      }
+    });
+  });
 })();
 },{"./data.js":"js/data.js"}],"index.js":[function(require,module,exports) {
 "use strict";
@@ -18200,7 +18267,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42315" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44561" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
