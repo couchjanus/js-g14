@@ -355,7 +355,7 @@ function showCart() {
 
     addToCarts.forEach(function(addToCart) {
         addToCart.addEventListener('click', function() {
-            // saveCart(getProductItem(this.closest('.card')));
+            // saveCart(getProductItem(dataItem(this.closest('.card').querySelector('.win').getAttribute("productId"))));
             // console.log(dataItem(this.closest('.card').querySelector('.win').getAttribute("productId")));
             
             addProduct(getProductItem(dataItem(this.closest('.card').querySelector('.win').getAttribute("productId"))));

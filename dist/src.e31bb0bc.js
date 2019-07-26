@@ -18319,7 +18319,7 @@ function showCart() {
   var addToCarts = document.querySelectorAll('.add-to-cart');
   addToCarts.forEach(function (addToCart) {
     addToCart.addEventListener('click', function () {
-      // saveCart(getProductItem(this.closest('.card')));
+      // saveCart(getProductItem(dataItem(this.closest('.card').querySelector('.win').getAttribute("productId"))));
       // console.log(dataItem(this.closest('.card').querySelector('.win').getAttribute("productId")));
       addProduct(getProductItem(dataItem(this.closest('.card').querySelector('.win').getAttribute("productId"))));
       var imgItem = this.closest('.card').querySelector('img');
@@ -18392,7 +18392,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43669" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34483" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
