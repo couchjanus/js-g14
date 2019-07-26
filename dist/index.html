@@ -35,11 +35,14 @@
       <div class="footer">
         <div class="counts">
           <p>Amount: 123</p>
-          <p>Total: <span>$555</span></p>
+          <p class="cart-total">Total: $<span>555</span></p>
         </div>
 
       </div>
       <ul class="list-unstyled checkout">
+        <li>
+          <a href="#" class="clear-cart">Clear Cart</a>
+        </li>
         <li>
           <a href="#" class="check-out">Checkout</a>
         </li>
@@ -239,7 +242,7 @@
   <template id="cartItem">
     <div class="cart-item">
       <div class="item item-name"><span class="item-title"></span><i class="far fa-times-circle float-right remove-item"></i></div>
-      <div class="item item-img"> </div>
+      <div class="item item-img"></div>
       
       <div class="item item-quontity">
         <i class="fas fa-minus-circle adding minus"></i>
