@@ -1,5 +1,4 @@
 'use strict';
-import { data } from './data.js';
 
 function makeProductItem($template, product) {
     $template.querySelector('.win').setAttribute('productId', product.id);
@@ -23,27 +22,6 @@ function slideItem(content, item, i) {
     content.querySelector('.carousel-item__image').style.backgroundImage =
         'url(images/' + item.picture[i] + ')';
 
-    return content;
-}
-
-function addProductToCart(content, item) {
-    content.querySelector('.item-title').textContent = item.querySelector(
-        '.product-name'
-    ).textContent;
-
-    content.querySelector('.item-price').textContent = item.querySelector(
-        '.product-price'
-    ).textContent;
-
-    content
-        .querySelector('.item-price')
-        .setAttribute(
-            'price',
-            item.querySelector('.product-price').textContent
-        );
-
-    content.querySelector('.item-img').style.backgroundImage =
-        'url(' + item.querySelector('img').getAttribute('src') + ')';
     return content;
 }
 
@@ -98,13 +76,6 @@ class Product {
           this.picture = picture;
           this.amount = amount;
     }
-}
-
-function saveCart(prod) {
-    let tmpProducts = getProducts();
-    console.log(tmpProducts);
-    tmpProducts.push(new Product(prod.id,prod.name,prod.price,prod.picture,1));
-    window.localStorage.setItem("basket",JSON.stringify(tmpProducts));
 }
 
 function addProduct(prod){
@@ -173,8 +144,7 @@ function productInCart(content, item) {
 }
 
 function updateTotal() {
-    var quantities = 0,
-    total = 0,
+    var total = 0,
     $cartTotal = document.querySelector('.cart-total span'),
     items = document.querySelector('.cart-items').children;
     Array.from(items).forEach(function (item) {
@@ -199,7 +169,8 @@ function showCart() {
     updateTotal();
 }
 
-
+// const url = 'https://api.myjson.com/bins/gnf45';
+const url = 'https://my-json-server.typicode.com/couchjanus/db/products';
 (function() {
 
     initStorage();
@@ -218,184 +189,198 @@ function showCart() {
 
     const template = document.getElementById('productItem').content;
 
-    data.forEach(function(el) {
-        document
-            .querySelector('.showcase')
-            .append(makeProductItem(template, el).cloneNode(true));
-    });
-
-    const content = document.getElementById('cartItem').content;
-
-    document.querySelector('.cart-items').addEventListener(
-        'click',
-        function(e) {
-            if (e.target && e.target.matches('.remove-item')) {
-                let index = e.target.closest('.cart-item').getAttribute('id');
-                removeProduct(index);
-                e.target.parentNode.parentNode.remove();
-                updateTotal();
+    fetch(url).then(
+        function (response) {
+            if (response.status !== 200) {
+                   console.log('Looks like there was a problem. Status Code: ' + response.status);
+                   return;
             }
-            if (e.target && e.target.matches('.plus')) {
-                let el = e.target;
-                let price = parseFloat(
-                    el.parentNode.nextElementSibling
-                        .querySelector('.item-price')
-                        .getAttribute('price')
-                );
+            response.json().then(function (data) {
 
-                let id = el.closest('.cart-item').getAttribute('id');
-                plusProduct(id);
-                let val = parseInt(el.previousElementSibling.innerText);
-                val = el.previousElementSibling.innerText = val + 1;
-                
-                el.parentNode.nextElementSibling.querySelector(
-                    '.item-price'
-                ).innerText = parseFloat(price * val).toFixed(2);
-                updateTotal();
-            }
-
-            if (e.target && e.target.matches('.minus')) {
-                let el = e.target;
-                let price = parseFloat(
-                    el.parentNode.nextElementSibling
-                        .querySelector('.item-price')
-                        .getAttribute('price')
-                );
-                
-                let val = parseInt(el.nextElementSibling.innerText);
-                let id = el.closest('.cart-item').getAttribute('id');
-                if (val > 1) {
-                    minusProduct(id);
-                    val = el.nextElementSibling.innerText = val - 1;
-                }
-                el.parentNode.nextElementSibling.querySelector(
-                    '.item-price'
-                ).innerText = parseFloat(price * val).toFixed(2);
-                updateTotal();
-            }
-        },
-        false
-    );
-
-    const viewDetails = document.querySelectorAll('.view-detail');
-
-    viewDetails.forEach(function(element) {
-        element.addEventListener('click', function() {
-            let dataId = this.closest('.col-md-4').getAttribute('productId');
-            let dataItem = data[dataId];
-
-            let carouselItem = document.getElementById('carouselItem').content;
-
-            let detailTemplate = document.getElementById('productDetail')
-                .content;
-
-            for (let i = 0; i < dataItem.picture.length; i++) {
-                detailTemplate
-                    .querySelector('.carousel-detail')
-                    .append(
-                        document.importNode(
-                            slideItem(carouselItem, dataItem, i),
-                            true
-                        )
-                    );
-            }
-
-            document.querySelector('.showcase').innerHTML = '';
-
-            document
-                .querySelector('.showcase')
-                .append(document.importNode(detailTemplate, true));
-
-            document
-                .querySelectorAll('.carousel-detail-item')[0]
-                .classList.add('active-slide');
-
-            var total = document.querySelectorAll('.carousel-detail-item')
-                .length;
-
-            var current = 0;
-
-            document
-                .getElementById('moveRight')
-                .addEventListener('click', function() {
-                    let next = current;
-                    current = current + 1;
-                    setSlide(next, current);
+                data.forEach(function(el) {
+                    document
+                        .querySelector('.showcase')
+                        .append(makeProductItem(template, el).cloneNode(true));
                 });
 
-            document
-                .getElementById('moveLeft')
-                .addEventListener('click', function() {
-                    let prev = current;
-                    current = current - 1;
-                    setSlide(prev, current);
+                const content = document.getElementById('cartItem').content;
+
+                document.querySelector('.cart-items').addEventListener(
+                    'click',
+                    function(e) {
+                        if (e.target && e.target.matches('.remove-item')) {
+                            let index = e.target.closest('.cart-item').getAttribute('id');
+                            removeProduct(index);
+                            e.target.parentNode.parentNode.remove();
+                            updateTotal();
+                        }
+                        if (e.target && e.target.matches('.plus')) {
+                            let el = e.target;
+                            let price = parseFloat(
+                                el.parentNode.nextElementSibling
+                                    .querySelector('.item-price')
+                                    .getAttribute('price')
+                            );
+
+                            let id = el.closest('.cart-item').getAttribute('id');
+                            plusProduct(id);
+                            let val = parseInt(el.previousElementSibling.innerText);
+                            val = el.previousElementSibling.innerText = val + 1;
+                            
+                            el.parentNode.nextElementSibling.querySelector(
+                                '.item-price'
+                            ).innerText = parseFloat(price * val).toFixed(2);
+                            updateTotal();
+                        }
+
+                        if (e.target && e.target.matches('.minus')) {
+                            let el = e.target;
+                            let price = parseFloat(
+                                el.parentNode.nextElementSibling
+                                    .querySelector('.item-price')
+                                    .getAttribute('price')
+                            );
+                            
+                            let val = parseInt(el.nextElementSibling.innerText);
+                            let id = el.closest('.cart-item').getAttribute('id');
+                            if (val > 1) {
+                                minusProduct(id);
+                                val = el.nextElementSibling.innerText = val - 1;
+                            }
+                            el.parentNode.nextElementSibling.querySelector(
+                                '.item-price'
+                            ).innerText = parseFloat(price * val).toFixed(2);
+                            updateTotal();
+                        }
+                    },
+                    false
+                );
+
+                const viewDetails = document.querySelectorAll('.view-detail');
+                viewDetails.forEach(function(element) {
+                    element.addEventListener('click', function() {
+                        let dataId = this.closest('.col-md-4').getAttribute('productId');
+                        let dataItem = data[dataId];
+
+                        let carouselItem = document.getElementById('carouselItem').content;
+
+                        let detailTemplate = document.getElementById('productDetail')
+                            .content;
+
+                        for (let i = 0; i < dataItem.picture.length; i++) {
+                            detailTemplate
+                                .querySelector('.carousel-detail')
+                                .append(
+                                    document.importNode(
+                                        slideItem(carouselItem, dataItem, i),
+                                        true
+                                    )
+                                );
+                        }
+
+                        document.querySelector('.showcase').innerHTML = '';
+
+                        document
+                            .querySelector('.showcase')
+                            .append(document.importNode(detailTemplate, true));
+
+                        document
+                            .querySelectorAll('.carousel-detail-item')[0]
+                            .classList.add('active-slide');
+
+                        var total = document.querySelectorAll('.carousel-detail-item')
+                            .length;
+
+                        var current = 0;
+
+                        document
+                            .getElementById('moveRight')
+                            .addEventListener('click', function() {
+                                let next = current;
+                                current = current + 1;
+                                setSlide(next, current);
+                            });
+
+                        document
+                            .getElementById('moveLeft')
+                            .addEventListener('click', function() {
+                                let prev = current;
+                                current = current - 1;
+                                setSlide(prev, current);
+                            });
+
+                        function setSlide(prev, next) {
+                            let slide = current;
+                            if (next > total - 1) {
+                                slide = 0;
+                                current = 0;
+                            }
+                            if (next < 0) {
+                                slide = total - 1;
+                                current = total - 1;
+                            }
+                            document
+                                .querySelectorAll('.carousel-detail-item')
+                                [prev].classList.remove('active-slide');
+                            document
+                                .querySelectorAll('.carousel-detail-item')
+                                [slide].classList.add('active-slide');
+                        }
+                    });
                 });
+                let addToCarts = document.querySelectorAll('.add-to-cart');
 
-            function setSlide(prev, next) {
-                let slide = current;
-                if (next > total - 1) {
-                    slide = 0;
-                    current = 0;
-                }
-                if (next < 0) {
-                    slide = total - 1;
-                    current = total - 1;
-                }
-                document
-                    .querySelectorAll('.carousel-detail-item')
-                    [prev].classList.remove('active-slide');
-                document
-                    .querySelectorAll('.carousel-detail-item')
-                    [slide].classList.add('active-slide');
-            }
-        });
+                addToCarts.forEach(function(addToCart) {
+                    addToCart.addEventListener('click', function() {
+
+                        let id = this.closest('.card').querySelector('.win').getAttribute("productId");
+           
+                        fetch(url+"/"+id).then(
+                            (response) => {
+                            response.json().then( 
+                                (data) => {
+                                    addProduct(getProductItem(data));
+                                })
+                        });
+
+                        let imgItem = this.closest('.card').querySelector('img');
+                        let win = this.closest('.card').querySelector('.win');
+
+                        if (imgItem) {
+                            let imgClone = imgItem.cloneNode(true);
+                            imgClone.classList.add('offset-img');
+
+                            document.body.appendChild(imgClone);
+
+                            imgItem.style.transform = 'rotateY(180deg)';
+                            win.style.display = 'block';
+
+                            imgClone.animate([{
+                                transform: _translate(imgItem)
+                                },
+                                {
+                                    transform: _translate(document.querySelector('#sidebarCollapse'), 50) + 'perspective(500px) scale3d(0.1, 0.1, 0.2)'
+                                },
+                            ], {
+                                duration: 2000,
+                            })
+                            .onfinish = function() {
+                                imgClone.remove();
+                                imgItem.style.transform = 'rotateY(0deg)';
+                                win.style.display = 'none';
+                            };
+                        }
+                    });
+                });
+                document.querySelector('.clear-cart').addEventListener('click', () => {
+                    localStorage.removeItem('basket');
+                    initStorage();
+                    document.querySelector('.cart-items').innerHTML = '';
+                    updateTotal();
+                });
+            });
+    })
+    .catch(function (err) {
+        console.log('Fetch Error :-S', err);
     });
-
-    let addToCarts = document.querySelectorAll('.add-to-cart');
-
-    addToCarts.forEach(function(addToCart) {
-        addToCart.addEventListener('click', function() {
-            // saveCart(getProductItem(dataItem(this.closest('.card').querySelector('.win').getAttribute("productId"))));
-            // console.log(dataItem(this.closest('.card').querySelector('.win').getAttribute("productId")));
-            
-            addProduct(getProductItem(dataItem(this.closest('.card').querySelector('.win').getAttribute("productId"))));
-
-            let imgItem = this.closest('.card').querySelector('img');
-            let win = this.closest('.card').querySelector('.win');
-
-            if (imgItem) {
-                let imgClone = imgItem.cloneNode(true);
-                imgClone.classList.add('offset-img');
-
-                document.body.appendChild(imgClone);
-
-                imgItem.style.transform = 'rotateY(180deg)';
-                win.style.display = 'block';
-
-                imgClone.animate([{
-                    transform: _translate(imgItem)
-                    },
-                    {
-                        transform: _translate(document.querySelector('#sidebarCollapse'), 50) + 'perspective(500px) scale3d(0.1, 0.1, 0.2)'
-                    },
-                ], {
-                    duration: 2000,
-                })
-                .onfinish = function() {
-                    imgClone.remove();
-                    imgItem.style.transform = 'rotateY(0deg)';
-                    win.style.display = 'none';
-                };
-            }
-        });
-    });
-
-    // =================Очистка всего хранилища================
-    document.querySelector('.clear-cart').addEventListener('click', () => {
-        localStorage.removeItem('basket');
-        initStorage();
-        document.querySelector('.cart-items').innerHTML = '';
-        updateTotal();
-    });
-
 })();

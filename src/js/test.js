@@ -1,110 +1,75 @@
 'use strict';
 
-let addToCarts = document.querySelectorAll('.add-to-cart');
+function CreateRequest() {
+	var httpRequest = false;
 
-// addToCarts.forEach(function(addToCart){
-//     addToCart.addEventListener('click', function() {
-//         let y = 180;
-//         this.closest(".card").firstElementChild.style.transform = 'rotateY(' + y + 'deg)';
+	if (window.XMLHttpRequest) {
+		//Gecko-совместимые браузеры, Safari, Konqueror
+		httpRequest = new XMLHttpRequest();
+		httpRequest.overrideMimeType('text/xml');
+	} else if (window.ActiveXObject) {
+		//Internet explorer
+		try {
+			httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+		} catch (CatchException) {
+			httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
+		}
+	}
 
-//         let content = document.getElementById("cartItem").content;
-//         document.querySelector('.cart-items').appendChild(content);
-//     });
-// });
+	if (!httpRequest) {
+		console.log("Невозможно создать XMLHttpRequest");
+	}
 
+	return httpRequest;
+}
 
-// addToCarts.forEach(function(addToCart){
-//   addToCart.addEventListener('click', function() {
-//       let y = 180;
-//       this.closest(".card").firstElementChild.style.transform = 'rotateY(' + y + 'deg)';
+function printConsole(text) {
+	document.getElementById("console").innerHTML += text;
+}
 
-//       let content = document.getElementById("cartItem").content;
-//       document.querySelector('.cart-items').append(document.importNode(content, true));
-//   });
-// });
+function sendRequest() {
+	//Создаём запрос
+	//  Это вызывает функцию CreateRequest();
+	var request = CreateRequest();
+	var url = 'http://jsonplaceholder.typicode.com/';
 
+	//Проверяем существование запроса
+	if (!request) {
+		console.log("Невозможно создать XMLHttpRequest");
+	} else {
+		console.log("Ура! Мы создали XMLHttpRequest. Что с ним делать?");
 
-// function addProductToCart(content){
-//   content.querySelector('.item-name').textContent = "Red Cat";
-//   content.querySelector('.quontity').textContent = 2;
-//   content.querySelector('.item-price').textContent = 12.34;
- 
-//   content.querySelector('.item-img').style.backgroundImage = "url(02.cafa12f0.jpg)";
-  
-//   document.querySelector('.cart-items').append(document.importNode(content, true));
-// }
+		request.onreadystatechange = function () {
+			switch (request.readyState) {
+				case 1:
+					printConsole('<div class="alert alert-secondary" role="alert">1: Подготовка к отправке...</div>');
+					break;
+				case 2:
+					printConsole('<div class="alert alert-primary" role="alert">2: Отправлен...</div>');
+					break;
+				case 3:
+					printConsole('<div class="alert alert-warning" role="alert">3: Идет обмен...</div>');
+					break;
+				case 4:
+					{
+						if (request.status == 200) {
+							printConsole('<div class="alert alert-success" role="alert">4: Обмен завершен!</div>');
+							document.getElementById("printResult").innerHTML = "<b>" + request.responseText + "</b>";
+						} else if (request.status == 404) {
+							printConsole('<div class="alert alert-danger" role="alert">Ошибка: запрашиваемый скрипт не найден!</div>');
+						} else {
+							printConsole('<div class="alert alert-danger" role="alert">Ошибка: сервер вернул статус: ' + request.status + '</div>');
+						}
+						break;
+					}
+			}
+		};
+		request.open('GET', url, true);
+		// this.style.display = 'none';
+		request.send('');
+	}
+}
 
-// addToCarts.forEach(function(addToCart){
-//   addToCart.addEventListener('click', function() {
-//       let y = 180;
-//       this.closest(".card").firstElementChild.style.transform = 'rotateY(' + y + 'deg)';
-//       let content = document.getElementById("cartItem").content;
-//       addProductToCart(content);
-//   });
-// });
+// Пользователь нажимает на ссылку 
 
-
-// ==================================================
-
-  // function addProductToCart(content, item) {
-  //   content.querySelector('.item-name').textContent = item.querySelector(".product-name").textContent;
-    
-  //   content.querySelector('.item-price').textContent = item.querySelector(".product-price").textContent;
-    
-  //   content.querySelector('.item-img').style.backgroundImage = "url("+item.querySelector("img").getAttribute('src')+")";
-  //   ;
-  //   document.querySelector('.cart-items').append(document.importNode(content, true));
-  // }
-    
-
-    // addToCarts.forEach(function(addToCart){
-    //   addToCart.addEventListener('click', function() {
-    //       let y = 180;
-    //       this.closest(".card").firstElementChild.style.transform = 'rotateY(' + y + 'deg)';
-    //       let content = document.getElementById("cartItem").content;
-    //       addProductToCart(content, this.closest(".card"));
-    //   });
-    // });
-        
-  // ==========================================
-
-//   function addProductToCart(content, item){
-//     content.querySelector('.item-name').textContent = item.querySelector(".product-name").textContent;
-//     content.querySelector('.item-price').textContent = item.querySelector(".product-price").textContent;
-//     content.querySelector('.item-img').style.backgroundImage = "url("+item.querySelector("img").getAttribute('src')+")";
-//     ;
-//     return content;
-// }
-
-// addToCarts.forEach(function(addToCart){
-//   addToCart.addEventListener('click', function() {
-//       let y = 180;
-//       this.closest(".card").firstElementChild.style.transform = 'rotateY(' + y + 'deg)';
-//       let content = document.getElementById("cartItem").content;
-//       document.querySelector('.cart-items').append(document.importNode(addProductToCart(content, this.closest(".card")), true));
-//   });
-// });
-
-  // ===============================================
-
-//   function addProductToCart(content, item){
-//     content.querySelector('.item-name').textContent = item.querySelector(".product-name").textContent;
-//     content.querySelector('.item-price').textContent = item.querySelector(".product-price").textContent;
-//     content.querySelector('.item-img').style.backgroundImage = "url("+item.querySelector("img").getAttribute('src')+")";
-//     ;
-//     return content;
-// }
-
-// const content = document.getElementById("cartItem").content;
-
-// addToCarts.forEach(function(addToCart){
-//   addToCart.addEventListener('click', function() {
-//       let y = 180;
-//       this.closest(".card").firstElementChild.style.transform = 'rotateY(' + y + 'deg)';
-//       // let content = document.getElementById("cartItem").content;
-//       document.querySelector('.cart-items').append(document.importNode(addProductToCart(content, this.closest(".card")), true));
-      
-//   });
-// });
-
-  // ===============================================
+document.querySelector('.btnGo').addEventListener('click', sendRequest);
