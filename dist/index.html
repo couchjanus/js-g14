@@ -77,7 +77,7 @@
                 <a class="nav-link" href="#">Page</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Page</a>
+                <a class="nav-link" href="#" id="openModal">Add New</a>
               </li>
             </ul>
           </div>
@@ -237,6 +237,35 @@
 
   </div>
 
+  <!-- The Modal -->
+
+   
+  <div id="myModal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+          <div class="modal-header">
+              <span class="close-modal">&times;</span>
+              <h2>Create Product</h2>
+          </div>
+          <div class="form modal-body">
+
+              <form class="product-form">
+                  <input id="product--name" type="text" placeholder="Pruduct Name" required="">
+                  <input id="product--price" type="text" placeholder="Pruduct Price" required="">
+                  <input id="product--description" type="text" placeholder="Pruduct Description" required="">
+                  
+                  <button id="save-product">Add Product</button>
+
+              </form>
+          </div>
+          <div class="modal-footer">
+              <h3>Modal Footer</h3>
+          </div>
+      </div>
+
+  </div>
+
   <div class="overlay"></div>
 
   <template id="cartItem">
@@ -312,6 +341,13 @@
         </div>
     </div>
   </template>
+
+
+   
+
+
+
+  
 
   <script src="/src.e31bb0bc.js"></script>
   

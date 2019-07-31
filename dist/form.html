@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Hello, Form!</title>
+</head>
+
+<body>
+    <div class="card">
+        <div class="card-header text-center">
+            Hello, Form!
+        </div>
+        <div class="card-body">
+            <!-- <form onsubmit="printResult.innerHTML = '<h2>Form submitted!</h2>'; return false"> -->
+            <!-- <form method="GET"> -->
+            <form method="POST" name="product">
+                <div class="form-group row">
+                  <label for="title" class="col-sm-2 col-form-label">Product Title</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="title" placeholder="Product Title" name="title">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="price" class="col-sm-2 col-form-label">Product Price</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="price" placeholder="Product Price" name="price">
+                  </div>
+                </div>
+                <div class="form-group row">
+                    <label for="description" class="col-sm-2 col-form-label">Product Description</label>
+                    <div class="col-sm-10">
+                      <!-- <textarea class="form-control" id="description" placeholder="Product Description" name="description">Hey Server, give me please this resource</textarea> -->
+                      <textarea class="form-control" id="description" placeholder="Product Description" name="description">Hey server, look at this data and send me the corresponding result</textarea>
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                  <div class="col-sm-10">
+                    <button type="submit" name="submit" class="btn btn-primary">Add Product</button>
+                  </div>
+                </div>
+              </form>
+        </div>
+        <div class="card-footer text-muted" id="printResult">
+            ответ сервера
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <script src="/src.e31bb0bc.js"></script>
+    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

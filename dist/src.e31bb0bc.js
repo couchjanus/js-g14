@@ -117,7 +117,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"../../../.nvm/versions/node/v12.6.0/lib/node_modules/parcel-bundler/node_modules/process/browser.js":[function(require,module,exports) {
+})({"../../../.nvm/versions/node/v12.7.0/lib/node_modules/parcel-bundler/node_modules/process/browser.js":[function(require,module,exports) {
 
 // shim for using process in browser
 var process = module.exports = {}; // cached from whatever global is present so that test runners that stub it
@@ -10929,7 +10929,7 @@ if ( !noGlobal ) {
 return jQuery;
 } );
 
-},{"process":"../../../.nvm/versions/node/v12.6.0/lib/node_modules/parcel-bundler/node_modules/process/browser.js"}],"../node_modules/popper.js/dist/esm/popper.js":[function(require,module,exports) {
+},{"process":"../../../.nvm/versions/node/v12.7.0/lib/node_modules/parcel-bundler/node_modules/process/browser.js"}],"../node_modules/popper.js/dist/esm/popper.js":[function(require,module,exports) {
 var global = arguments[3];
 "use strict";
 
@@ -17967,85 +17967,383 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     value: true
   });
 });
-},{"jquery":"../node_modules/jquery/dist/jquery.js","popper.js":"../node_modules/popper.js/dist/esm/popper.js"}],"js/test.js":[function(require,module,exports) {
+},{"jquery":"../node_modules/jquery/dist/jquery.js","popper.js":"../node_modules/popper.js/dist/esm/popper.js"}],"js/app.js":[function(require,module,exports) {
 'use strict';
 
-function CreateRequest() {
-  var httpRequest = false;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  if (window.XMLHttpRequest) {
-    //Gecko-совместимые браузеры, Safari, Konqueror
-    httpRequest = new XMLHttpRequest();
-    httpRequest.overrideMimeType('text/xml');
-  } else if (window.ActiveXObject) {
-    //Internet explorer
-    try {
-      httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
-    } catch (CatchException) {
-      httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
+function makeProductItem($template, product) {
+  $template.querySelector('.win').setAttribute('productId', product.id);
+  $template.querySelector('.product-name').textContent = product.name;
+  $template.querySelector('.card-img-top').setAttribute('src', 'images/' + product.picture[0]);
+  $template.querySelector('img').setAttribute('alt', product.name);
+  $template.querySelector('.product-price').textContent = product.price;
+  return $template;
+}
+
+function slideItem(content, item, i) {
+  content.querySelector('.carousel-item__title').textContent = item.name;
+  content.querySelector('.carousel-item__subtitle').textContent = item.subtitle[i];
+  content.querySelector('.carousel-item__description').textContent = item.description;
+  content.querySelector('.carousel-item__image').style.backgroundImage = 'url(images/' + item.picture[i] + ')';
+  return content;
+}
+
+function _translate(img) {
+  var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : -150;
+  var rect = img.getBoundingClientRect();
+  var elements = ['translate3D('];
+  elements.push(rect.left - offset + 'px,');
+  elements.push(rect.top - offset + 'px,0)');
+  return elements.join('');
+}
+
+function dataItem(id) {
+  return data[id];
+}
+
+function getProductItem(item) {
+  return {
+    id: item.id,
+    price: item.price,
+    name: item.name,
+    picture: 'images/' + item.picture[0]
+  };
+}
+
+function initStorage() {
+  window.localStorage.getItem('basket') ? window.localStorage.getItem('basket') : window.localStorage.setItem('basket', JSON.stringify([]));
+}
+
+function openCart(shoppingCart) {
+  showCart(shoppingCart);
+  document.getElementById('sidebar').classList.add('active');
+  document.querySelector('.overlay').classList.add('active');
+}
+
+function closeCart() {
+  document.getElementById('sidebar').classList.remove('active');
+  document.querySelector('.overlay').classList.remove('active');
+}
+
+function getProducts() {
+  return JSON.parse(window.localStorage.getItem('basket'));
+}
+
+var Product = function Product(id, name, price, picture, amount) {
+  _classCallCheck(this, Product);
+
+  this.id = id;
+  this.name = name;
+  this.price = price;
+  this.picture = picture;
+  this.amount = amount;
+};
+
+function addProduct(prod) {
+  var tmpProducts = getProducts();
+
+  if (tmpProducts.length > 0) {
+    var exist = tmpProducts.some(function (elem) {
+      return elem.id === prod.id;
+    });
+
+    if (exist) {
+      tmpProducts.forEach(function (elem) {
+        if (elem.id === prod.id) {
+          elem.amount += 1;
+        }
+      });
+    } else {
+      tmpProducts.push(new Product(prod.id, prod.name, prod.price, prod.picture, 1));
     }
-  }
-
-  if (!httpRequest) {
-    console.log("Невозможно создать XMLHttpRequest");
-  }
-
-  return httpRequest;
-}
-
-function printConsole(text) {
-  document.getElementById("console").innerHTML += text;
-}
-
-function sendRequest() {
-  //Создаём запрос
-  //  Это вызывает функцию CreateRequest();
-  var request = CreateRequest();
-  var url = 'http://jsonplaceholder.typicode.com/'; //Проверяем существование запроса
-
-  if (!request) {
-    console.log("Невозможно создать XMLHttpRequest");
   } else {
-    console.log("Ура! Мы создали XMLHttpRequest. Что с ним делать?");
-
-    request.onreadystatechange = function () {
-      switch (request.readyState) {
-        case 1:
-          printConsole('<div class="alert alert-secondary" role="alert">1: Подготовка к отправке...</div>');
-          break;
-
-        case 2:
-          printConsole('<div class="alert alert-primary" role="alert">2: Отправлен...</div>');
-          break;
-
-        case 3:
-          printConsole('<div class="alert alert-warning" role="alert">3: Идет обмен...</div>');
-          break;
-
-        case 4:
-          {
-            if (request.status == 200) {
-              printConsole('<div class="alert alert-success" role="alert">4: Обмен завершен!</div>');
-              document.getElementById("printResult").innerHTML = "<b>" + request.responseText + "</b>";
-            } else if (request.status == 404) {
-              printConsole('<div class="alert alert-danger" role="alert">Ошибка: запрашиваемый скрипт не найден!</div>');
-            } else {
-              printConsole('<div class="alert alert-danger" role="alert">Ошибка: сервер вернул статус: ' + request.status + '</div>');
-            }
-
-            break;
-          }
-      }
-    };
-
-    request.open('GET', url, true); // this.style.display = 'none';
-
-    request.send('');
+    tmpProducts.push(new Product(prod.id, prod.name, prod.price, prod.picture, 1));
   }
-} // Пользователь нажимает на ссылку 
+
+  window.localStorage.setItem('basket', JSON.stringify(tmpProducts));
+}
+
+function plusProduct(id) {
+  var tmpProducts = getProducts();
+  tmpProducts.forEach(function (elem) {
+    if (elem.id === +id) {
+      elem.amount += 1;
+    }
+  });
+  window.localStorage.setItem('basket', JSON.stringify(tmpProducts));
+}
+
+function minusProduct(id) {
+  var tmpProducts = getProducts();
+  tmpProducts.forEach(function (elem) {
+    if (elem.id === +id) {
+      elem.amount -= 1;
+    }
+  });
+  window.localStorage.setItem('basket', JSON.stringify(tmpProducts));
+}
+
+function removeProduct(index) {
+  var tmpProducts = getProducts();
+  tmpProducts.splice(tmpProducts.indexOf(tmpProducts.find(function (x) {
+    return x.id === +index;
+  })), 1);
+  window.localStorage.setItem('basket', JSON.stringify(tmpProducts));
+}
+
+function productInCart(content, item) {
+  content.querySelector('.cart-item').setAttribute('id', item.id);
+  content.querySelector('.item-title').textContent = item.name;
+  content.querySelector('.item-price').textContent = item.price;
+  content.querySelector('.quontity').textContent = item.amount;
+  content.querySelector('.item-price').setAttribute('price', item.price);
+  content.querySelector('.item-img').style.backgroundImage = 'url(' + item.picture + ')';
+  content.querySelector('.item-price').innerText = parseFloat(item.price * item.amount).toFixed(2);
+  return content;
+}
+
+function updateTotal() {
+  var total = 0,
+      $cartTotal = document.querySelector('.cart-total span'),
+      items = document.querySelector('.cart-items').children;
+  Array.from(items).forEach(function (item) {
+    total += parseFloat(item.querySelector('.item-price').textContent);
+  });
+  $cartTotal.textContent = parseFloat(Math.round(total * 100) / 100).toFixed(2);
+}
+
+function showCart() {
+  var shoppingCart = getProducts();
+
+  if (shoppingCart.length == 0) {
+    console.log('Your Shopping Cart is Empty!');
+    return;
+  }
+
+  document.querySelector('.cart-items').innerHTML = '';
+  shoppingCart.forEach(function (item) {
+    var template = document.getElementById('cartItem').content;
+    productInCart(template, item);
+    document.querySelector('.cart-items').append(document.importNode(productInCart(template, item), true));
+  });
+  updateTotal();
+} // const url = 'https://api.myjson.com/bins/gnf45';
+// const url = 'https://my-json-server.typicode.com/couchjanus/db/products';
 
 
-document.querySelector('.btnGo').addEventListener('click', sendRequest);
+var url = 'http://localhost:3000/products';
+
+(function () {
+  // Get the modal
+  var modal = document.getElementById('myModal'); // Get the button that opens the modal
+
+  var openModal = document.getElementById('openModal'); // Get the <span> element that closes the modal
+
+  var closeModal = document.querySelector('.close-modal'); // When the user clicks the button, open the modal
+
+  openModal.onclick = function () {
+    document.querySelector('.overlay').classList.add('active');
+    modal.style.display = 'block';
+  }; // When the user clicks on <span> (x), close the modal
+
+
+  closeModal.onclick = function () {
+    modal.style.display = 'none';
+    document.querySelector('.overlay').classList.remove('active');
+  }; // When the user clicks anywhere outside of the modal, close it
+
+
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = 'none';
+      document.querySelector('.overlay').classList.remove('active');
+    }
+  };
+
+  document.getElementById('save-product').addEventListener('click', function () {
+    var pictures = [];
+    var subtitles = [];
+
+    for (var i = 1; i <= 5; i++) {
+      var row = 'cat' + (Math.floor(Math.random() * 9) + 1) + '.jpg';
+      pictures.push(row);
+    }
+
+    fetch(url, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        name: document.getElementById('product--name').value,
+        price: document.getElementById('product--price').value,
+        picture: pictures,
+        subtitle: subtitles,
+        description: document.getElementById('product--description').value
+      })
+    }).then(function (res) {
+      return res.json();
+    }).then(function () {
+      modal.style.display = 'none';
+      document.querySelector('.overlay').classList.remove('active');
+    });
+  });
+  initStorage();
+
+  if (localStorage.basket) {
+    console.log("It's basket storage");
+  }
+
+  document.querySelector('#dismiss, .overlay').addEventListener('click', function () {
+    return closeCart();
+  });
+  document.getElementById('sidebarCollapse').addEventListener('click', function () {
+    return openCart();
+  });
+  var template = document.getElementById('productItem').content;
+  fetch(url).then(function (response) {
+    if (response.status !== 200) {
+      console.log('Looks like there was a problem. Status Code: ' + response.status);
+      return;
+    }
+
+    response.json().then(function (data) {
+      data.forEach(function (el) {
+        document.querySelector('.showcase').append(makeProductItem(template, el).cloneNode(true));
+      });
+      var content = document.getElementById('cartItem').content;
+      document.querySelector('.cart-items').addEventListener('click', function (e) {
+        if (e.target && e.target.matches('.remove-item')) {
+          var index = e.target.closest('.cart-item').getAttribute('id');
+          removeProduct(index);
+          e.target.parentNode.parentNode.remove();
+          updateTotal();
+        }
+
+        if (e.target && e.target.matches('.plus')) {
+          var el = e.target;
+          var price = parseFloat(el.parentNode.nextElementSibling.querySelector('.item-price').getAttribute('price'));
+          var id = el.closest('.cart-item').getAttribute('id');
+          plusProduct(id);
+          var val = parseInt(el.previousElementSibling.innerText);
+          val = el.previousElementSibling.innerText = val + 1;
+          el.parentNode.nextElementSibling.querySelector('.item-price').innerText = parseFloat(price * val).toFixed(2);
+          updateTotal();
+        }
+
+        if (e.target && e.target.matches('.minus')) {
+          var _el = e.target;
+
+          var _price = parseFloat(_el.parentNode.nextElementSibling.querySelector('.item-price').getAttribute('price'));
+
+          var _val = parseInt(_el.nextElementSibling.innerText);
+
+          var _id = _el.closest('.cart-item').getAttribute('id');
+
+          if (_val > 1) {
+            minusProduct(_id);
+            _val = _el.nextElementSibling.innerText = _val - 1;
+          }
+
+          _el.parentNode.nextElementSibling.querySelector('.item-price').innerText = parseFloat(_price * _val).toFixed(2);
+          updateTotal();
+        }
+      }, false);
+      var viewDetails = document.querySelectorAll('.view-detail');
+      viewDetails.forEach(function (element) {
+        element.addEventListener('click', function () {
+          var id = this.closest('.card').querySelector('.win').getAttribute('productId');
+          fetch(url + '/' + id).then(function (response) {
+            response.json().then(function (data) {
+              var carouselItem = document.getElementById('carouselItem').content;
+              var detailTemplate = document.getElementById('productDetail').content;
+
+              for (var i = 0; i < data.picture.length; i++) {
+                detailTemplate.querySelector('.carousel-detail').append(document.importNode(slideItem(carouselItem, data, i), true));
+              }
+
+              document.querySelector('.showcase').innerHTML = '';
+              document.querySelector('.showcase').append(document.importNode(detailTemplate, true));
+              document.querySelectorAll('.carousel-detail-item')[0].classList.add('active-slide');
+              var total = document.querySelectorAll('.carousel-detail-item').length;
+              var current = 0;
+              document.getElementById('moveRight').addEventListener('click', function () {
+                var next = current;
+                current = current + 1;
+                setSlide(next, current);
+              });
+              document.getElementById('moveLeft').addEventListener('click', function () {
+                var prev = current;
+                current = current - 1;
+                setSlide(prev, current);
+              });
+
+              function setSlide(prev, next) {
+                var slide = current;
+
+                if (next > total - 1) {
+                  slide = 0;
+                  current = 0;
+                }
+
+                if (next < 0) {
+                  slide = total - 1;
+                  current = total - 1;
+                }
+
+                document.querySelectorAll('.carousel-detail-item')[prev].classList.remove('active-slide');
+                document.querySelectorAll('.carousel-detail-item')[slide].classList.add('active-slide');
+              }
+            });
+          });
+        });
+      });
+      var addToCarts = document.querySelectorAll('.add-to-cart');
+      addToCarts.forEach(function (addToCart) {
+        addToCart.addEventListener('click', function () {
+          var id = this.closest('.card').querySelector('.win').getAttribute('productId');
+          fetch(url + '/' + id).then(function (response) {
+            response.json().then(function (data) {
+              addProduct(getProductItem(data));
+            });
+          });
+          var imgItem = this.closest('.card').querySelector('img');
+          var win = this.closest('.card').querySelector('.win');
+
+          if (imgItem) {
+            var imgClone = imgItem.cloneNode(true);
+            imgClone.classList.add('offset-img');
+            document.body.appendChild(imgClone);
+            imgItem.style.transform = 'rotateY(180deg)';
+            win.style.display = 'block';
+
+            imgClone.animate([{
+              transform: _translate(imgItem)
+            }, {
+              transform: _translate(document.querySelector('#sidebarCollapse'), 50) + 'perspective(500px) scale3d(0.1, 0.1, 0.2)'
+            }], {
+              duration: 2000
+            }).onfinish = function () {
+              imgClone.remove();
+              imgItem.style.transform = 'rotateY(0deg)';
+              win.style.display = 'none';
+            };
+          }
+        });
+      });
+      document.querySelector('.clear-cart').addEventListener('click', function () {
+        localStorage.removeItem('basket');
+        initStorage();
+        document.querySelector('.cart-items').innerHTML = '';
+        updateTotal();
+      });
+    });
+  }).catch(function (err) {
+    console.log('Fetch Error :-S', err);
+  });
+})();
 },{}],"index.js":[function(require,module,exports) {
 "use strict";
 
@@ -18053,10 +18351,10 @@ require("bootstrap");
 
 var _jquery = _interopRequireDefault(require("jquery"));
 
-require("./js/test");
+require("./js/app");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"bootstrap":"../node_modules/bootstrap/dist/js/bootstrap.js","jquery":"../node_modules/jquery/dist/jquery.js","./js/test":"js/test.js"}],"../../../.nvm/versions/node/v12.6.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"bootstrap":"../node_modules/bootstrap/dist/js/bootstrap.js","jquery":"../node_modules/jquery/dist/jquery.js","./js/app":"js/app.js"}],"../../../.nvm/versions/node/v12.7.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -18084,7 +18382,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42477" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34551" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -18259,5 +18557,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../.nvm/versions/node/v12.6.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
+},{}]},{},["../../../.nvm/versions/node/v12.7.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
 //# sourceMappingURL=/src.e31bb0bc.js.map
